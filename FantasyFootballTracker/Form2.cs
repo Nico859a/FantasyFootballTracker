@@ -64,8 +64,72 @@ namespace FantasyFootballTracker
             newRow["Receiving Yards"] = receivingYards;
             newRow["Grade"] = grade;
             watchlistTable.Rows.Add(newRow);
+
+            UpdateAverageGradeLabel();
+
         }
 
+        private string CalculateAverageGrade(DataGridView watchlistDataGridView)
+        {
+            double totalGradeValue = 0;
+            int validCount = 0;
+
+            foreach (DataGridViewRow row in watchlistDataGridView.Rows)
+            {
+                string? grade = row.Cells["Grade"].Value?.ToString();
+
+                if (!string.IsNullOrEmpty(grade))
+                {
+                    validCount++; // only increment for non-null, non-empty grades
+
+                    switch (grade)
+                    {
+                        case "A":
+                            totalGradeValue += 4;
+                            break;
+                        case "B":
+                            totalGradeValue += 3;
+                            break;
+                        case "C":
+                            totalGradeValue += 2;
+                            break;
+                        case "D":
+                            totalGradeValue += 1;
+                            break;
+                    }
+                }
+            }
+
+            if (validCount == 0) return "N/A";
+
+            double averageGradeValue = totalGradeValue / validCount;
+            string averageGrade;
+
+            if (averageGradeValue >= 3.5)
+            {
+                averageGrade = "A";
+            }
+            else if (averageGradeValue >= 2.5)
+            {
+                averageGrade = "B";
+            }
+            else if (averageGradeValue >= 1.5)
+            {
+                averageGrade = "C";
+            }
+            else
+            {
+                averageGrade = "D";
+            }
+
+            return averageGrade;
+        }
+
+        private void UpdateAverageGradeLabel()
+        {
+            string? averageGrade = CalculateAverageGrade(dataGridViewWatchlist);
+            labAverageGrade.Text = $"Average Grade: {averageGrade}";
+        }
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
@@ -84,6 +148,8 @@ namespace FantasyFootballTracker
             {
                 MessageBox.Show("Please select a player to remove from the watchlist.", "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+
+            UpdateAverageGradeLabel();
         }
 
         private void DataGridViewWatchlist_KeyDown(object sender, KeyEventArgs e)
@@ -102,6 +168,8 @@ namespace FantasyFootballTracker
                     }
                 }
             }
+
+            UpdateAverageGradeLabel();
         }
 
         private void DataGridViewWatchlist_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -116,6 +184,8 @@ namespace FantasyFootballTracker
                     dataGridViewWatchlist.Rows.RemoveAt(e.RowIndex);
                 }
             }
+
+            UpdateAverageGradeLabel();
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
