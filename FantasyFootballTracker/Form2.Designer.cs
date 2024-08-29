@@ -31,6 +31,7 @@
             dataGridViewWatchlist = new DataGridView();
             labWatchlist = new Label();
             btnRemove = new CustomButton();
+            labAverageGrade = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridViewWatchlist).BeginInit();
             SuspendLayout();
             // 
@@ -78,12 +79,24 @@
             btnRemove.UseVisualStyleBackColor = false;
             btnRemove.Click += btnRemove_Click;
             // 
+            // labAverageGrade
+            // 
+            labAverageGrade.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            labAverageGrade.AutoSize = true;
+            labAverageGrade.Font = new Font("RODE Noto Sans Hindi B", 9.75F, FontStyle.Bold);
+            labAverageGrade.Location = new Point(626, 388);
+            labAverageGrade.Name = "labAverageGrade";
+            labAverageGrade.Size = new Size(0, 18);
+            labAverageGrade.TabIndex = 3;
+            labAverageGrade.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LightGray;
             ClientSize = new Size(788, 450);
+            Controls.Add(labAverageGrade);
             Controls.Add(btnRemove);
             Controls.Add(labWatchlist);
             Controls.Add(dataGridViewWatchlist);
@@ -100,5 +113,6 @@
         private DataGridView dataGridViewWatchlist;
         private Label labWatchlist;
         private CustomButton btnRemove;
+        private Label labAverageGrade;
     }
 }
